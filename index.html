@@ -102,7 +102,17 @@
   .detail-big { font-size: 5rem; font-weight: bold; color: #FFA94D; line-height: 1; }
   .detail-both { font-size: 2rem; color: #aaa; margin-bottom: 8px; }
   .detail-phonic { font-size: 1.2rem; color: #888; margin-bottom: 8px; }
-  .detail-example { font-size: 1rem; color: #555; margin-bottom: 12px; }
+  .detail-example { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 14px; }
+  .word-chip {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: #fff8ec; border: 2px solid #FFD8A8; border-radius: 14px;
+    padding: 8px 12px; cursor: pointer; font-family: inherit;
+    transition: all 0.15s; min-width: 86px;
+  }
+  .word-chip:hover { transform: scale(1.06); border-color: #FFA94D; background: #fff3cd; }
+  .word-chip .chip-emoji { font-size: 1.6rem; }
+  .word-chip b { font-size: 0.95rem; color: #e8590c; }
+  .word-chip .chip-jp { font-size: 0.75rem; color: #999; }
   .speak-big-btn {
     padding: 10px 24px;
     background: #FFA94D;
@@ -228,32 +238,32 @@
 
 <script>
 const ALPHA = [
-  {l:'A',ph:'エイ / ア',ex:'🍎 Apple（りんご）'},
-  {l:'B',ph:'ビー / ブ',ex:'🐻 Bear（くま）'},
-  {l:'C',ph:'シー / ク',ex:'🐱 Cat（ねこ）'},
-  {l:'D',ph:'ディー / ドゥ',ex:'🐶 Dog（いぬ）'},
-  {l:'E',ph:'イー / エ',ex:'🥚 Egg（たまご）'},
-  {l:'F',ph:'エフ / フ',ex:'🐸 Frog（かえる）'},
-  {l:'G',ph:'ジー / グ',ex:'🍇 Grapes（ぶどう）'},
-  {l:'H',ph:'エイチ / フ',ex:'🏠 House（いえ）'},
-  {l:'I',ph:'アイ / イ',ex:'🍦 Ice cream（アイスクリーム）'},
-  {l:'J',ph:'ジェイ / ジュ',ex:'🎃 Jack-o-lantern'},
-  {l:'K',ph:'ケイ / ク',ex:'🪁 Kite（たこ）'},
-  {l:'L',ph:'エル / ル',ex:'🦁 Lion（ライオン）'},
-  {l:'M',ph:'エム / ム',ex:'🌙 Moon（つき）'},
-  {l:'N',ph:'エン / ヌ',ex:'🌃 Night（よる）'},
-  {l:'O',ph:'オー / オ',ex:'🐙 Octopus（たこ）'},
-  {l:'P',ph:'ピー / プ',ex:'🐧 Penguin（ペンギン）'},
-  {l:'Q',ph:'キュー / クウ',ex:'👑 Queen（じょおう）'},
-  {l:'R',ph:'アール / ル',ex:'🌈 Rainbow（にじ）'},
-  {l:'S',ph:'エス / ス',ex:'☀️ Sun（たいよう）'},
-  {l:'T',ph:'ティー / トゥ',ex:'🐯 Tiger（とら）'},
-  {l:'U',ph:'ユー / ア',ex:'☂️ Umbrella（かさ）'},
-  {l:'V',ph:'ブイ / ヴ',ex:'🎻 Violin（バイオリン）'},
-  {l:'W',ph:'ダブリュー / ウ',ex:'🌊 Wave（なみ）'},
-  {l:'X',ph:'エックス / クス',ex:'🎄 X-mas（クリスマス）'},
-  {l:'Y',ph:'ワイ / ヤ',ex:'🪀 Yo-yo（ヨーヨー）'},
-  {l:'Z',ph:'ゼット / ズ',ex:'🦓 Zebra（しまうま）'},
+  {l:'A',ph:'エイ / ア',words:[['🍎','Apple','りんご'],['🐜','Ant','あり'],['✈️','Airplane','ひこうき']]},
+  {l:'B',ph:'ビー / ブ',words:[['🐻','Bear','くま'],['🍌','Banana','バナナ'],['📚','Book','ほん']]},
+  {l:'C',ph:'シー / ク',words:[['🐱','Cat','ねこ'],['🚗','Car','くるま'],['🍰','Cake','ケーキ']]},
+  {l:'D',ph:'ディー / ドゥ',words:[['🐶','Dog','いぬ'],['🚪','Door','ドア'],['🦆','Duck','あひる']]},
+  {l:'E',ph:'イー / エ',words:[['🥚','Egg','たまご'],['🐘','Elephant','ぞう'],['🌍','Earth','ちきゅう']]},
+  {l:'F',ph:'エフ / フ',words:[['🐸','Frog','かえる'],['🐟','Fish','さかな'],['🌸','Flower','はな']]},
+  {l:'G',ph:'ジー / グ',words:[['🍇','Grapes','ぶどう'],['🦒','Giraffe','きりん'],['🎁','Gift','プレゼント']]},
+  {l:'H',ph:'エイチ / フ',words:[['👋','Hello','こんにちは'],['🏠','House','いえ'],['🎩','Hat','ぼうし']]},
+  {l:'I',ph:'アイ / イ',words:[['🍦','Ice cream','アイスクリーム'],['🧊','Ice','こおり'],['🏝️','Island','しま']]},
+  {l:'J',ph:'ジェイ / ジュ',words:[['🧃','Juice','ジュース'],['🎃','Jack-o-lantern','かぼちゃランタン'],['🤸','Jump','ジャンプ']]},
+  {l:'K',ph:'ケイ / ク',words:[['🪁','Kite','たこ'],['🔑','Key','かぎ'],['🦘','Kangaroo','カンガルー']]},
+  {l:'L',ph:'エル / ル',words:[['🦁','Lion','ライオン'],['🍋','Lemon','レモン'],['🍃','Leaf','はっぱ']]},
+  {l:'M',ph:'エム / ム',words:[['🌙','Moon','つき'],['🐵','Monkey','さる'],['🥛','Milk','ぎゅうにゅう']]},
+  {l:'N',ph:'エン / ヌ',words:[['🌃','Night','よる'],['👃','Nose','はな'],['📓','Notebook','ノート']]},
+  {l:'O',ph:'オー / オ',words:[['🐙','Octopus','たこ'],['🍊','Orange','オレンジ'],['🦉','Owl','ふくろう']]},
+  {l:'P',ph:'ピー / プ',words:[['🐧','Penguin','ペンギン'],['🍕','Pizza','ピザ'],['🐼','Panda','パンダ']]},
+  {l:'Q',ph:'キュー / クウ',words:[['👑','Queen','じょおう'],['❓','Question','しつもん'],['🤫','Quiet','しずか']]},
+  {l:'R',ph:'アール / ル',words:[['🌈','Rainbow','にじ'],['🐰','Rabbit','うさぎ'],['🚀','Rocket','ロケット']]},
+  {l:'S',ph:'エス / ス',words:[['☀️','Sun','たいよう'],['⭐','Star','ほし'],['🐍','Snake','へび']]},
+  {l:'T',ph:'ティー / トゥ',words:[['🐯','Tiger','とら'],['🌳','Tree','き'],['🚂','Train','でんしゃ']]},
+  {l:'U',ph:'ユー / ア',words:[['☂️','Umbrella','かさ'],['🦄','Unicorn','ユニコーン'],['⬆️','Up','うえ']]},
+  {l:'V',ph:'ブイ / ヴ',words:[['🎻','Violin','バイオリン'],['🥦','Vegetable','やさい'],['🌋','Volcano','かざん']]},
+  {l:'W',ph:'ダブリュー / ウ',words:[['🌊','Wave','なみ'],['🍉','Watermelon','すいか'],['🐺','Wolf','おおかみ']]},
+  {l:'X',ph:'エックス / クス',words:[['🎄','X-mas','クリスマス'],['🎹','Xylophone','もっきん'],['📦','Box','はこ（さいごがX）']]},
+  {l:'Y',ph:'ワイ / ヤ',words:[['🪀','Yo-yo','ヨーヨー'],['💛','Yellow','きいろ'],['🛥️','Yacht','ヨット']]},
+  {l:'Z',ph:'ゼット / ズ',words:[['🦓','Zebra','しまうま'],['🤐','Zipper','チャック'],['0️⃣','Zero','ゼロ']]},
 ];
 
 const COLORS = ['#FF6B6B','#FFA94D','#FFD43B','#69DB7C','#74C0FC','#DA77F2','#F06595','#FF6B6B','#FFA94D','#FFD43B','#69DB7C','#74C0FC','#DA77F2','#F06595','#FF6B6B','#FFA94D','#FFD43B','#69DB7C','#74C0FC','#DA77F2','#F06595','#FF6B6B','#FFA94D','#FFD43B','#69DB7C','#74C0FC'];
@@ -287,7 +297,16 @@ function selectAlpha(a, el) {
   document.getElementById('detail-big').textContent = letter;
   document.getElementById('detail-both').textContent = `${a.l}  /  ${a.l.toLowerCase()}`;
   document.getElementById('detail-phonic').textContent = `よみ: ${a.ph}`;
-  document.getElementById('detail-example').textContent = a.ex;
+  // その文字ではじまる単語をチップで表示（タップで発音）
+  const exEl = document.getElementById('detail-example');
+  exEl.innerHTML = '';
+  a.words.forEach(([e, w, j]) => {
+    const chip = document.createElement('button');
+    chip.className = 'word-chip';
+    chip.innerHTML = `<span class="chip-emoji">${e}</span><b>${w}</b><span class="chip-jp">${j}</span>`;
+    chip.addEventListener('click', () => speak(w));
+    exEl.appendChild(chip);
+  });
   document.getElementById('detail-panel').classList.add('show');
   speak(a.l);
 }
@@ -309,10 +328,25 @@ document.getElementById('btn-lower').addEventListener('click', () => {
   buildGrid();
 });
 
+// 英語ネイティブボイスを自動選択（Edge Natural > Google > en-US）
+let enVoice = null;
+function pickVoice() {
+  if (!window.speechSynthesis) return;
+  const vs = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+  enVoice = vs.find(v => /Natural/i.test(v.name) && v.lang === 'en-US')
+         || vs.find(v => /Google/i.test(v.name) && v.lang === 'en-US')
+         || vs.find(v => v.lang === 'en-US') || vs[0] || null;
+}
+if (window.speechSynthesis) {
+  pickVoice();
+  speechSynthesis.onvoiceschanged = pickVoice;
+}
+
 function speak(letter) {
   if (!window.speechSynthesis) return;
   const u = new SpeechSynthesisUtterance(letter.toLowerCase());
   u.lang = 'en-US'; u.rate = 0.8;
+  if (enVoice) u.voice = enVoice;
   speechSynthesis.cancel();
   speechSynthesis.speak(u);
 }
